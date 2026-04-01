@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PCQA Dashboard — Non-Compliance Tracking</title>
+  <meta name="description" content="Real-time non-compliance dashboard for Process Compliance and Quality Analysis teams." />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h1>PCQA</h1>
+      <p>Non-Compliance Dashboard</p>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#overview" class="nav-item active" data-section="overview">Overview</a>
+      <a href="#by-market" class="nav-item" data-section="by-market">By Market</a>
+      <a href="#by-type" class="nav-item" data-section="by-type">By Type</a>
+      <a href="#by-severity" class="nav-item" data-section="by-severity">By Severity</a>
+      <a href="#trends" class="nav-item" data-section="trends">Trends</a>
+    </nav>
+    <div class="sidebar-footer">
+      <p class="last-updated">Last updated: <span id="lastUpdated">just now</span></p>
+      <button class="refresh-btn" onclick="refreshData()">Refresh</button>
+    </div>
+  </div>
+
+  <main class="dashboard">
+    <header class="dashboard-header">
+      <h2>Non-Compliance Tracking System</h2>
+      <div class="header-controls">
+        <select id="monthFilter" onchange="filterByMonth()">
+          <option value="">All Months</option>
+          <option value="01">January</option>
+          <option value="02">February</option>
+          <option value="03">March</option>
+          <option value="04">April</option>
+          <option value="05">May</option>
+          <option value="06">June</option>
+          <option value="07">July</option>
+          <option value="08">August</option>
+          <option value="09">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+        <select id="yearFilter" onchange="filterByMonth()">
+          <option value="2024">2024</option>
+          <option value="2025" selected>2025</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- Overview Section -->
+    <section id="overview" class="section active">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Total Non-Compliances</div>
+          <div class="metric-value" id="totalCount">0</div>
+          <div class="metric-change" id="totalChange">+0 this month</div>
+        </div>
+        <div class="metric-card alert-high">
+          <div class="metric-label">Critical Issues</div>
+          <div class="metric-value" id="criticalCount">0</div>
+          <div class="metric-change">Requires immediate action</div>
+        </div>
+        <div class="metric-card alert-medium">
+          <div class="metric-label">High Priority</div>
+          <div class="metric-value" id="highCount">0</div>
+          <div class="metric-change">Follow-up needed</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Markets Tracked</div>
+          <div class="metric-value">3</div>
+          <div class="metric-change">Active monitoring</div>
+        </div>
+      </div>
+
+      <div class="section-content">
+        <h3>Summary by Market</h3>
+        <div class="market-summary" id="marketSummary"></div>
+      </div>
+    </section>
+
+    <!-- By Market Section -->
+    <section id="by-market" class="section">
+      <div class="section-content">
+        <h3>Non-Compliances by Market</h3>
+        <div class="market-cards" id="marketCards"></div>
+        <div class="chart-container">
+          <canvas id="marketChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- By Type Section -->
+    <section id="by-type" class="section">
+      <div class="section-content">
+        <h3>Non-Compliances by Type</h3>
+        <div class="chart-row">
+          <div class="chart-container" style="max-width: 45%;">
+            <canvas id="typeChart"></canvas>
+          </div>
+          <div class="type-breakdown" id="typeBreakdown" style="max-width: 45%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- By Severity Section -->
+    <section id="by-severity" class="section">
+      <div class="section-content">
+        <h3>Non-Compliances by Severity</h3>
+        <div class="chart-row">
+          <div class="chart-container" style="max-width: 45%;">
+            <canvas id="severityChart"></canvas>
+          </div>
+          <div class="severity-breakdown" id="severityBreakdown" style="max-width: 45%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trends Section -->
+    <section id="trends" class="section">
+      <div class="section-content">
+        <h3>Monthly Trends (Last 12 Months)</h3>
+        <div class="chart-container">
+          <canvas id="trendsChart"></canvas>
+        </div>
+        <div id="trendDetails"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./data.js"></script>
+  <script src="./dashboard.js"></script>
+</body>
+</html>
